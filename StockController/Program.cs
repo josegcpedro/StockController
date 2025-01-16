@@ -4,6 +4,7 @@ using System;
 class Program
 {
     static List<Product> products = new List<Product>();
+    static List<Categorie> categories = new List<Categorie>();
 
     static void Main()
     {
@@ -45,7 +46,8 @@ class Program
         Console.WriteLine("2. Modifier un produit");
         Console.WriteLine("3. Suprimmer un produit");
         Console.WriteLine("4. Afficher les produits d'une categorie");
-        Console.WriteLine("5. Quitter");
+        Console.WriteLine("5. Afficher les categories");
+        Console.WriteLine("6. Quitter");
 
         string? choix = Console.ReadLine();
 
@@ -67,6 +69,9 @@ class Program
                 ShowProductByCategory();
                 break;
             case "5":
+                ShowCategory();
+                break;
+            case "6":
                 return;
         }
     }
@@ -85,12 +90,40 @@ class Program
             return;
         }
         Console.WriteLine("Quel est la categorie du produit?");
-        string? categorie = Console.ReadLine();
+        string? categorieName = Console.ReadLine();
 
-        Product product = new Product(categorie, productName, productPrice);
+        var existingCategory = categories.FirstOrDefault(c => c.NomCategorie.Equals(categorieName, StringComparison.OrdinalIgnoreCase));
+
+        if (existingCategory == null)
+        {
+            Categorie newCategorie = new Categorie(categorieName);
+            categories.Add(newCategorie);
+        }
+
+        Product product = new Product(categorieName, productName, productPrice);
         products.Add(product);
         Menu();
     }
+
+    static void ShowCategory()
+    {
+        Console.WriteLine("Voici toutes les catégories!");
+
+        if (categories.Any()) // Vérifie s'il y a des catégories
+        {
+            foreach (var categorie in categories)
+            {
+                Console.WriteLine(categorie.NomCategorie); // Affiche le nom de chaque catégorie
+            }
+        }
+        else
+        {
+            Console.WriteLine("Aucune catégorie disponible.");
+        }
+
+        Menu(); // Retour au menu après affichage
+    }
+
 
     static void ShowProductByCategory()
     {
