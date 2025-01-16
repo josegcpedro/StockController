@@ -60,11 +60,11 @@ class Program
                 break;
             case "2":
                 Console.WriteLine("2");
-                //AddProduct()
+                ModifyProduct();
                 break;
             case "3":
                 Console.WriteLine("3");
-                //AddProduct()
+                D()
                 break;
             case "4":
                 ShowProductByCategory();
@@ -107,6 +107,43 @@ class Program
         Product product = new Product(CategorieName, productName, productPrice);
         products.Add(product);
         Menu();
+    }
+
+    static void ModifyProduct()
+    {
+        Console.WriteLine("Quel est le nom du produit que vous vouleuz modifier?");
+        string? desiredModificationProduct = Console.ReadLine();
+
+        Product productToModify = products.Find(product => product.ProductName.Equals(desiredModificationProduct, StringComparison.OrdinalIgnoreCase));
+
+        if (productToModify != null)
+        {
+            Console.WriteLine("Que souhaitez vous modifier?");
+
+            Console.WriteLine("1. Nom");
+            Console.WriteLine("2. Prix");
+
+            string choix = Console.ReadLine();
+
+            switch (choix)
+            {
+                case "1":
+                    Console.WriteLine("Quel est le nouveau Nom?");
+                    string newName = Console.ReadLine();
+                    productToModify.ProductName = newName;
+                    Menu();
+                    break;
+                case "2":
+                    Console.WriteLine("Quel est le nouveau prix?");
+                    decimal newPrice;
+                    if (decimal.TryParse(Console.ReadLine(), out newPrice))
+                    {
+                        productToModify.ProductPrice = newPrice;
+                    }
+                    Menu();
+                    break;
+            }
+        }
     }
 
     static void AddCategory()
