@@ -64,7 +64,7 @@ class Program
                 break;
             case "3":
                 Console.WriteLine("3");
-                D()
+                DeleteProduct();
                 break;
             case "4":
                 ShowProductByCategory();
@@ -145,41 +145,39 @@ class Program
             }
         }
     }
-
-    static void AddCategory()
+    static void DeleteProduct()
     {
-        Console.WriteLine("Quel est le nom de la categorie?");
-        string? CategorieName = Console.ReadLine();
+        Console.WriteLine("Quel est le produit que voulez-vous supprimer?");
+        string desiredDeletion = Console.ReadLine();
+        Product productToDelete = products.Find(product => product.ProductName.Equals(desiredDeletion, StringComparison.OrdinalIgnoreCase));
 
-        var existingCategory = categories.FirstOrDefault(c => c.CategorieName.Equals(CategorieName, StringComparison.OrdinalIgnoreCase));
-
-        if (existingCategory == null)
+        if (productToDelete != null)
         {
-            Categorie newCategorie = new Categorie(CategorieName);
-            categories.Add(newCategorie);
-            Menu();
-        }
-
-    }
-    static void ShowCategory()
-    {
-        Console.WriteLine("Voici toutes les catégories!");
-
-        if (categories.Any())
-        {
-            foreach (var categorie in categories)
+            Console.WriteLine($"Voulez-vous supprimer {productToDelete.ProductName}?");
+            Console.WriteLine("1. Oui");
+            Console.WriteLine("2. Non");
+            string choix = Console.ReadLine();
+            if (choix == "1")
             {
-                Console.WriteLine(categorie.CategorieName);
+                products.Remove(productToDelete);
+                bool isCategoryStillUsed = products.Any(p => p.Categorie.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
+                if (!isCategoryStillUsed)
+                {
+                    var categoryToRemove = categories.Find(c => c.CategorieName.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
+                    if (categoryToRemove != null)
+                    {
+                        categories.Remove(categoryToRemove);
+                    }
+                }
+                Menu();
             }
         }
         else
         {
-            Console.WriteLine("Aucune catégorie disponible.");
+            Console.WriteLine("Produit pas trouvé!");
+            Menu();
         }
-
-        Menu();
     }
-
 
     static void ShowProductByCategory()
     {
@@ -202,6 +200,41 @@ class Program
             Menu();
         }
     }
+
+    static void ShowCategory()
+    {
+        Console.WriteLine("Voici toutes les catégories!");
+
+        if (categories.Any())
+        {
+            foreach (var categorie in categories)
+            {
+                Console.WriteLine(categorie.CategorieName);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Aucune catégorie disponible.");
+        }
+
+        Menu();
+    }
+    static void AddCategory()
+    {
+        Console.WriteLine("Quel est le nom de la categorie?");
+        string? CategorieName = Console.ReadLine();
+
+        var existingCategory = categories.FirstOrDefault(c => c.CategorieName.Equals(CategorieName, StringComparison.OrdinalIgnoreCase));
+
+        if (existingCategory == null)
+        {
+            Categorie newCategorie = new Categorie(CategorieName);
+            categories.Add(newCategorie);
+            Menu();
+        }
+
+    }
+
 }
 
 class Product
