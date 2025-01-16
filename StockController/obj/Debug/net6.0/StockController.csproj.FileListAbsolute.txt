@@ -1,0 +1,17 @@
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.csproj.AssemblyReference.cache
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.GeneratedMSBuildEditorConfig.editorconfig
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.AssemblyInfoInputs.cache
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.AssemblyInfo.cs
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.csproj.CoreCompileInputs.cache
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/StockController
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/StockController.deps.json
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/StockController.runtimeconfig.json
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/StockController.dll
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/ref/StockController.dll
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/StockController.pdb
+/Users/josepedro/Desktop/cSharp/StockController/StockController/bin/Debug/net6.0/dotenv.net.dll
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.csproj.CopyComplete
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.dll
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/ref/StockController.dll
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.pdb
+/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/Debug/net6.0/StockController.genruntimeconfig.cache
