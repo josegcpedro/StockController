@@ -48,7 +48,8 @@ class Program
         Console.WriteLine("4. Afficher les produits d'une categorie");
         Console.WriteLine("5. Afficher les categories");
         Console.WriteLine("6. Créer une catégorie");
-        Console.WriteLine("6. Quitter");
+        Console.WriteLine("7. Supprimer une catégorie");
+        Console.WriteLine("8. Quitter");
 
         string? choix = Console.ReadLine();
 
@@ -76,6 +77,9 @@ class Program
                 AddCategory();
                 break;
             case "7":
+                DeleteCategory();
+                break;
+            case "8":
                 return;
         }
     }
@@ -161,13 +165,12 @@ class Program
             {
                 products.Remove(productToDelete);
                 bool isCategoryStillUsed = products.Any(p => p.Categorie.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
+
                 if (!isCategoryStillUsed)
                 {
-                    var categoryToRemove = categories.Find(c => c.CategorieName.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
-                    if (categoryToRemove != null)
-                    {
-                        categories.Remove(categoryToRemove);
-                    }
+                    var categoryToDelete = categories.Find(c => c.CategorieName.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
+
+                    categories.Remove(categoryToDelete);
                 }
                 Menu();
             }
@@ -230,6 +233,35 @@ class Program
         {
             Categorie newCategorie = new Categorie(CategorieName);
             categories.Add(newCategorie);
+            Menu();
+        }
+
+    }
+
+    static void DeleteCategory()
+    {
+        Console.WriteLine("Quel est le nom de la categorie que vous souhaitez supprimer?");
+        string? categorieNameToDelete = Console.ReadLine();
+
+        bool isCategoryStillUsed = products.Any(p => p.Categorie.Equals(categorieNameToDelete, StringComparison.OrdinalIgnoreCase));
+
+        if (!isCategoryStillUsed)
+        {
+            Categorie? categorieToDelete = categories.Find(c => c.CategorieName.Equals(categorieNameToDelete, StringComparison.OrdinalIgnoreCase));
+
+            if (categorieToDelete != null)
+            {
+                categories.Remove(categorieToDelete);
+                Menu();
+            } else {
+                Console.WriteLine("Aucune categorie trouvée");
+                Menu();
+            }
+
+        }
+        else
+        {
+            Console.WriteLine("Pas possible car la categorie est associé à un produit");
             Menu();
         }
 
