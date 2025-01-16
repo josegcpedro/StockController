@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lwOkK+ZjHvfKHd9b5I5E+0XO6QNFXQWrqiweVIy0ja8HyVtvjJPWIJzfDoHjnE2TjG6ieVpSKcBA4dJ+FDQ52w==",
+  "dgSpecHash": "lY0ytABlu6yDK9U64l+XQDYxswWSUjm1elyXru6NnZK32ZDlZIC5yEis92axoJNxrKFRSF90Yn3b1d910E0okg==",
   "success": true,
-  "projectFilePath": "/Users/josepedro/Desktop/c#/StockController/StockController/StockController.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/Users/josepedro/Desktop/cSharp/StockController/StockController/StockController.csproj",
+  "expectedPackageFiles": [
+    "/Users/josepedro/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512"
+  ],
   "logs": []
 }

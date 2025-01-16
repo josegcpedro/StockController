@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/josepedro/Desktop/c#/StockController/StockController/StockController.csproj": {}
+    "/Users/josepedro/Desktop/cSharp/StockController/StockController/StockController.csproj": {}
   },
   "projects": {
-    "/Users/josepedro/Desktop/c#/StockController/StockController/StockController.csproj": {
+    "/Users/josepedro/Desktop/cSharp/StockController/StockController/StockController.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/josepedro/Desktop/c#/StockController/StockController/StockController.csproj",
+        "projectUniqueName": "/Users/josepedro/Desktop/cSharp/StockController/StockController/StockController.csproj",
         "projectName": "StockController",
-        "projectPath": "/Users/josepedro/Desktop/c#/StockController/StockController/StockController.csproj",
+        "projectPath": "/Users/josepedro/Desktop/cSharp/StockController/StockController/StockController.csproj",
         "packagesPath": "/Users/josepedro/.nuget/packages/",
-        "outputPath": "/Users/josepedro/Desktop/c#/StockController/StockController/obj/",
+        "outputPath": "/Users/josepedro/Desktop/cSharp/StockController/StockController/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/josepedro/.nuget/NuGet/NuGet.Config"
@@ -37,6 +37,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[3.2.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
