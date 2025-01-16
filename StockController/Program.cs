@@ -4,7 +4,7 @@ using System;
 class Program
 {
     static List<Product> products = new List<Product>();
-    static List<Categorie> categories = new List<Categorie>();
+    static List<Category> categories = new List<Category>();
 
     static void Main()
     {
@@ -40,38 +40,34 @@ class Program
 
     static void Menu()
     {
-        Console.WriteLine("Que souhaitez vous faire!");
-
+        Console.WriteLine("Que souhaitez-vous faire ?");
         Console.WriteLine("1. Ajouter un produit");
         Console.WriteLine("2. Modifier un produit");
-        Console.WriteLine("3. Suprimmer un produit");
-        Console.WriteLine("4. Afficher les produits d'une categorie");
-        Console.WriteLine("5. Afficher les categories");
+        Console.WriteLine("3. Supprimer un produit");
+        Console.WriteLine("4. Afficher les produits d'une catégorie");
+        Console.WriteLine("5. Afficher les catégories");
         Console.WriteLine("6. Créer une catégorie");
         Console.WriteLine("7. Supprimer une catégorie");
         Console.WriteLine("8. Quitter");
 
-        string? choix = Console.ReadLine();
+        string? choice = Console.ReadLine();
 
-        switch (choix)
+        switch (choice)
         {
             case "1":
-                Console.WriteLine("1");
                 AddProduct();
                 break;
             case "2":
-                Console.WriteLine("2");
                 ModifyProduct();
                 break;
             case "3":
-                Console.WriteLine("3");
                 DeleteProduct();
                 break;
             case "4":
-                ShowProductByCategory();
+                ShowProductsByCategory();
                 break;
             case "5":
-                ShowCategory();
+                ShowCategories();
                 break;
             case "6":
                 AddCategory();
@@ -81,221 +77,237 @@ class Program
                 break;
             case "8":
                 return;
+            default:
+                Console.WriteLine("Choix invalide. Veuillez réessayer.");
+                Menu();
+                break;
         }
     }
 
-
     static void AddProduct()
     {
-        Console.WriteLine("Quel est le nom du produit?");
+        Console.WriteLine("Quel est le nom du produit ?");
         string? productName = Console.ReadLine();
         Console.WriteLine("Prix du produit :");
-        decimal productPrice;
-
-        if (!decimal.TryParse(Console.ReadLine(), out productPrice))
+        if (!decimal.TryParse(Console.ReadLine(), out decimal productPrice))
         {
             Console.WriteLine("Prix invalide.");
             return;
         }
-        Console.WriteLine("Quel est la categorie du produit?");
-        string? CategorieName = Console.ReadLine();
 
-        var existingCategory = categories.FirstOrDefault(c => c.CategorieName.Equals(CategorieName, StringComparison.OrdinalIgnoreCase));
+        Console.WriteLine("Quelle est la catégorie du produit ?");
+        string? categoryName = Console.ReadLine();
+
+        var existingCategory = categories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
 
         if (existingCategory == null)
         {
-            Categorie newCategorie = new Categorie(CategorieName);
-            categories.Add(newCategorie);
+            Category newCategory = new Category(categoryName);
+            categories.Add(newCategory);
         }
 
-        Product product = new Product(CategorieName, productName, productPrice);
+        Product product = new Product(categoryName, productName, productPrice);
         products.Add(product);
+
+        Console.WriteLine("Produit ajouté avec succès !");
         Menu();
     }
 
     static void ModifyProduct()
     {
-        Console.WriteLine("Quel est le nom du produit que vous vouleuz modifier?");
-        string? desiredModificationProduct = Console.ReadLine();
+        Console.WriteLine("Quel est le nom du produit que vous voulez modifier ?");
+        string? desiredProductName = Console.ReadLine();
 
-        Product productToModify = products.Find(product => product.ProductName.Equals(desiredModificationProduct, StringComparison.OrdinalIgnoreCase));
+        Product productToModify = products.Find(product => product.ProductName.Equals(desiredProductName, StringComparison.OrdinalIgnoreCase));
 
         if (productToModify != null)
         {
-            Console.WriteLine("Que souhaitez vous modifier?");
-
+            Console.WriteLine("Que souhaitez-vous modifier ?");
             Console.WriteLine("1. Nom");
             Console.WriteLine("2. Prix");
 
-            string choix = Console.ReadLine();
+            string choice = Console.ReadLine();
 
-            switch (choix)
+            switch (choice)
             {
                 case "1":
-                    Console.WriteLine("Quel est le nouveau Nom?");
+                    Console.WriteLine("Quel est le nouveau nom ?");
                     string newName = Console.ReadLine();
                     productToModify.ProductName = newName;
-                    Menu();
+                    Console.WriteLine("Nom modifié avec succès !");
                     break;
                 case "2":
-                    Console.WriteLine("Quel est le nouveau prix?");
-                    decimal newPrice;
-                    if (decimal.TryParse(Console.ReadLine(), out newPrice))
+                    Console.WriteLine("Quel est le nouveau prix ?");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal newPrice))
                     {
                         productToModify.ProductPrice = newPrice;
+                        Console.WriteLine("Prix modifié avec succès !");
                     }
-                    Menu();
+                    else
+                    {
+                        Console.WriteLine("Prix invalide.");
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Choix invalide.");
                     break;
             }
         }
+        else
+        {
+            Console.WriteLine("Produit non trouvé.");
+        }
+        Menu();
     }
+
     static void DeleteProduct()
     {
-        Console.WriteLine("Quel est le produit que voulez-vous supprimer?");
-        string desiredDeletion = Console.ReadLine();
-        Product productToDelete = products.Find(product => product.ProductName.Equals(desiredDeletion, StringComparison.OrdinalIgnoreCase));
+        Console.WriteLine("Quel est le produit que vous voulez supprimer ?");
+        string productNameToDelete = Console.ReadLine();
+        Product productToDelete = products.Find(product => product.ProductName.Equals(productNameToDelete, StringComparison.OrdinalIgnoreCase));
 
         if (productToDelete != null)
         {
-            Console.WriteLine($"Voulez-vous supprimer {productToDelete.ProductName}?");
-            Console.WriteLine("1. Oui");
-            Console.WriteLine("2. Non");
-            string choix = Console.ReadLine();
-            if (choix == "1")
+            Console.WriteLine($"Voulez-vous vraiment supprimer {productToDelete.ProductName} ? (1. Oui / 2. Non)");
+            string choice = Console.ReadLine();
+            if (choice == "1")
             {
                 products.Remove(productToDelete);
-                bool isCategoryStillUsed = products.Any(p => p.Categorie.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
+
+                bool isCategoryStillUsed = products.Any(p => p.Category.Equals(productToDelete.Category, StringComparison.OrdinalIgnoreCase));
 
                 if (!isCategoryStillUsed)
                 {
-                    var categoryToDelete = categories.Find(c => c.CategorieName.Equals(productToDelete.Categorie, StringComparison.OrdinalIgnoreCase));
+                    var categoryToDelete = categories.Find(c => c.CategoryName.Equals(productToDelete.Category, StringComparison.OrdinalIgnoreCase));
 
-                    categories.Remove(categoryToDelete);
+                    if (categoryToDelete != null)
+                    {
+                        categories.Remove(categoryToDelete);
+                    }
                 }
-                Menu();
+                Console.WriteLine("Produit supprimé avec succès !");
             }
         }
         else
         {
-            Console.WriteLine("Produit pas trouvé!");
-            Menu();
+            Console.WriteLine("Produit non trouvé.");
         }
+        Menu();
     }
 
-    static void ShowProductByCategory()
+    static void ShowProductsByCategory()
     {
-        Console.WriteLine("Quel est le nom de la categorie que vous souhaitez afficher les produits?");
-        string choix = Console.ReadLine();
+        Console.WriteLine("Quel est le nom de la catégorie pour afficher les produits ?");
+        string categoryName = Console.ReadLine();
 
-        var filteredProducts = products.Where(p => p.Categorie.Equals(choix, StringComparison.OrdinalIgnoreCase)).ToList();
+        var filteredProducts = products.Where(p => p.Category.Equals(categoryName, StringComparison.OrdinalIgnoreCase)).ToList();
 
         if (filteredProducts.Any())
         {
-            foreach (var product in products)
+            foreach (var product in filteredProducts)
             {
                 Console.WriteLine(product);
             }
-            Menu();
         }
         else
         {
-            Console.WriteLine("Pas de produit de cette categorie trouvé");
-            Menu();
+            Console.WriteLine("Aucun produit trouvé dans cette catégorie.");
         }
+        Menu();
     }
 
-    static void ShowCategory()
+    static void ShowCategories()
     {
-        Console.WriteLine("Voici toutes les catégories!");
+        Console.WriteLine("Voici toutes les catégories disponibles :");
 
         if (categories.Any())
         {
-            foreach (var categorie in categories)
+            foreach (var category in categories)
             {
-                Console.WriteLine(categorie.CategorieName);
+                Console.WriteLine(category.CategoryName);
             }
         }
         else
         {
             Console.WriteLine("Aucune catégorie disponible.");
         }
-
         Menu();
     }
+
     static void AddCategory()
     {
-        Console.WriteLine("Quel est le nom de la categorie?");
-        string? CategorieName = Console.ReadLine();
+        Console.WriteLine("Quel est le nom de la catégorie ?");
+        string? categoryName = Console.ReadLine();
 
-        var existingCategory = categories.FirstOrDefault(c => c.CategorieName.Equals(CategorieName, StringComparison.OrdinalIgnoreCase));
+        var existingCategory = categories.FirstOrDefault(c => c.CategoryName.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
 
         if (existingCategory == null)
         {
-            Categorie newCategorie = new Categorie(CategorieName);
-            categories.Add(newCategorie);
-            Menu();
+            Category newCategory = new Category(categoryName);
+            categories.Add(newCategory);
+            Console.WriteLine("Catégorie ajoutée avec succès !");
         }
-
+        else
+        {
+            Console.WriteLine("La catégorie existe déjà.");
+        }
+        Menu();
     }
 
     static void DeleteCategory()
     {
-        Console.WriteLine("Quel est le nom de la categorie que vous souhaitez supprimer?");
-        string? categorieNameToDelete = Console.ReadLine();
+        Console.WriteLine("Quel est le nom de la catégorie que vous souhaitez supprimer ?");
+        string? categoryNameToDelete = Console.ReadLine();
 
-        bool isCategoryStillUsed = products.Any(p => p.Categorie.Equals(categorieNameToDelete, StringComparison.OrdinalIgnoreCase));
+        bool isCategoryStillUsed = products.Any(p => p.Category.Equals(categoryNameToDelete, StringComparison.OrdinalIgnoreCase));
 
         if (!isCategoryStillUsed)
         {
-            Categorie? categorieToDelete = categories.Find(c => c.CategorieName.Equals(categorieNameToDelete, StringComparison.OrdinalIgnoreCase));
+            Category? categoryToDelete = categories.Find(c => c.CategoryName.Equals(categoryNameToDelete, StringComparison.OrdinalIgnoreCase));
 
-            if (categorieToDelete != null)
+            if (categoryToDelete != null)
             {
-                categories.Remove(categorieToDelete);
-                Menu();
-            } else {
-                Console.WriteLine("Aucune categorie trouvée");
-                Menu();
+                categories.Remove(categoryToDelete);
+                Console.WriteLine("Catégorie supprimée avec succès !");
             }
-
+            else
+            {
+                Console.WriteLine("Catégorie non trouvée.");
+            }
         }
         else
         {
-            Console.WriteLine("Pas possible car la categorie est associé à un produit");
-            Menu();
+            Console.WriteLine("Impossible de supprimer, la catégorie est associée à un produit.");
         }
-
+        Menu();
     }
-
 }
 
 class Product
 {
     public string? ProductName { get; set; }
     public decimal? ProductPrice { get; set; }
-    public string? Categorie { get; set; }
+    public string? Category { get; set; }
 
-
-
-    public Product(string categorie, string productName, decimal productPrice)
+    public Product(string category, string productName, decimal productPrice)
     {
-        Categorie = categorie;
+        Category = category;
         ProductName = productName;
         ProductPrice = productPrice;
     }
 
     public override string ToString()
     {
-        return $"Nom: {ProductName}, Prix: {ProductPrice:C}, Catégorie: {Categorie}";
+        return $"Nom: {ProductName}, Prix: {ProductPrice:C}, Catégorie: {Category}";
     }
 }
 
-class Categorie
+class Category
 {
-    public string CategorieName { get; set; }
+    public string CategoryName { get; set; }
 
-    public Categorie(string categorieName)
+    public Category(string categoryName)
     {
-        CategorieName = categorieName;
+        CategoryName = categoryName;
     }
 }
