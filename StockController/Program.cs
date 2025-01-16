@@ -47,6 +47,7 @@ class Program
         Console.WriteLine("3. Suprimmer un produit");
         Console.WriteLine("4. Afficher les produits d'une categorie");
         Console.WriteLine("5. Afficher les categories");
+        Console.WriteLine("6. Créer une catégorie");
         Console.WriteLine("6. Quitter");
 
         string? choix = Console.ReadLine();
@@ -72,6 +73,9 @@ class Program
                 ShowCategory();
                 break;
             case "6":
+                AddCategory();
+                break;
+            case "7":
                 return;
         }
     }
@@ -90,30 +94,45 @@ class Program
             return;
         }
         Console.WriteLine("Quel est la categorie du produit?");
-        string? categorieName = Console.ReadLine();
+        string? CategorieName = Console.ReadLine();
 
-        var existingCategory = categories.FirstOrDefault(c => c.NomCategorie.Equals(categorieName, StringComparison.OrdinalIgnoreCase));
+        var existingCategory = categories.FirstOrDefault(c => c.CategorieName.Equals(CategorieName, StringComparison.OrdinalIgnoreCase));
 
         if (existingCategory == null)
         {
-            Categorie newCategorie = new Categorie(categorieName);
+            Categorie newCategorie = new Categorie(CategorieName);
             categories.Add(newCategorie);
         }
 
-        Product product = new Product(categorieName, productName, productPrice);
+        Product product = new Product(CategorieName, productName, productPrice);
         products.Add(product);
         Menu();
     }
 
+    static void AddCategory()
+    {
+        Console.WriteLine("Quel est le nom de la categorie?");
+        string? CategorieName = Console.ReadLine();
+
+        var existingCategory = categories.FirstOrDefault(c => c.CategorieName.Equals(CategorieName, StringComparison.OrdinalIgnoreCase));
+
+        if (existingCategory == null)
+        {
+            Categorie newCategorie = new Categorie(CategorieName);
+            categories.Add(newCategorie);
+            Menu();
+        }
+
+    }
     static void ShowCategory()
     {
         Console.WriteLine("Voici toutes les catégories!");
 
-        if (categories.Any()) // Vérifie s'il y a des catégories
+        if (categories.Any())
         {
             foreach (var categorie in categories)
             {
-                Console.WriteLine(categorie.NomCategorie); // Affiche le nom de chaque catégorie
+                Console.WriteLine(categorie.CategorieName);
             }
         }
         else
@@ -121,7 +140,7 @@ class Program
             Console.WriteLine("Aucune catégorie disponible.");
         }
 
-        Menu(); // Retour au menu après affichage
+        Menu();
     }
 
 
@@ -171,10 +190,10 @@ class Product
 
 class Categorie
 {
-    public string NomCategorie { get; set; }
+    public string CategorieName { get; set; }
 
-    public Categorie(string nomCategorie)
+    public Categorie(string categorieName)
     {
-        NomCategorie = nomCategorie;
+        CategorieName = categorieName;
     }
 }
